@@ -1,2 +1,3 @@
-# berizer_curves
+# Path creator with bezier curves
+
 Bezier curves generator with support of pygame
