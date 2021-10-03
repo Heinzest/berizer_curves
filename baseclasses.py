@@ -1,32 +1,52 @@
 import pygame
 
+pointTypes = [
+    ((255, 0, 0), 0),
+    ((255, 255, 255), 2),
+    ((0, 255, 255), 2)
+]
+
+lineTypes = [
+    ((139, 231, 139), 2),
+    ((200, 200, 200), 2),
+    ((0, 255, 255), 2)
+]
+
 
 class Point:
     x = 100
     y = 100
+    view = 2
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, view=1):
         self.x = x
         self.y = y
+        self.view = view
 
-    def set_cord(self, x, y):
-        self.x = x
-        self.y = y
+    def set_cord(self, x=0, y=0, offset_x=0, offset_y=0):
+        if x != 0:
+            self.x = x
+        if y != 0:
+            self.y = y
+        self.x += offset_x
+        self.y += offset_y
 
     def get_cord(self):
         return self.x, self.y
 
     def show(self, surface):
-        pygame.draw.circle(surface, (200, 200, 200), self.get_cord(), 5)
+        pygame.draw.circle(surface, pointTypes[self.view][0], self.get_cord(), 5, pointTypes[self.view][1])
 
 
 class Line:
     point0 = Point(100, 100)
     point1 = Point(100, 100)
+    view = 2
 
-    def __init__(self, point0, point1):
+    def __init__(self, point0, point1, view=1):
         self.point0 = point0
         self.point1 = point1
+        self.view = view
 
     def subpoint(self, t):
         x_c = self.point0.x + (self.point1.x - self.point0.x) * t
@@ -34,7 +54,7 @@ class Line:
         return x_c, y_c
 
     def show(self, surface):
-        pygame.draw.line(surface, (200, 200, 200), self.point0.get_cord(), self.point1.get_cord(), 2)
+        pygame.draw.line(surface, lineTypes[self.view][0], self.point0.get_cord(), self.point1.get_cord(), lineTypes[self.view][1])
 
 
 class QuadraticBezier:
@@ -99,14 +119,7 @@ class CubicBezier:
             point_list.append(Point(*p0))
         return point_list
 
-    def show(self, surface, outer):
-        if outer:
-            Line(self.point0, self.point1).show(surface)
-            Line(self.point2, self.point3).show(surface)
-            self.point0.show(surface)
-            self.point1.show(surface)
-            self.point2.show(surface)
-            self.point3.show(surface)
+    def show(self, surface):
         point_list = self.cubic_bezier()
         for x in range(self.intervals):
-            Line(point_list[x], point_list[x + 1]).show(surface)
+            Line(point_list[x], point_list[x + 1], 0).show(surface)
