@@ -2,4 +2,5 @@
 
 Bezier curves generator with support of pygame
 
-![image](https://user-images.githubusercontent.com/60257934/135730896-4652fe6c-c13d-4ed3-99ba-8253f0fbcc87.png)
+![image](https://user-images.githubusercontent.com/60257934/135766971-f1a6eeb8-a446-4b29-8ce9-2879801c2b48.png)
+
